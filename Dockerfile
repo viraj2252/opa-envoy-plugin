@@ -4,7 +4,7 @@
 
 ARG BASE
 
-FROM ${BASE}
+FROM ubuntu:latest
 
 # Any non-zero number will do, and unfortunately a named user will not, as k8s
 # pod securityContext runAsNonRoot can't resolve the user ID:
@@ -18,8 +18,9 @@ USER ${USER}
 
 WORKDIR /app
 
-COPY opa_envoy_linux_GOARCH /app
+COPY opa_envoy_linux_GOARCH /app/opa
+COPY my_wrapper_script.sh /app
+ENV PATH="/app:${PATH}"
+RUN ["chmod", "+x", "./my_wrapper_script.sh"]
 
-ENTRYPOINT ["./opa_envoy_linux_GOARCH"]
-
-CMD ["run"]
+CMD ./my_wrapper_script.sh
