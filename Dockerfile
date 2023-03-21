@@ -21,6 +21,8 @@ WORKDIR /app
 COPY opa_envoy_linux_GOARCH /app/opa
 COPY my_wrapper_script.sh /app
 ENV PATH="/app:${PATH}"
+USER root
 RUN ["chmod", "+x", "./my_wrapper_script.sh"]
+USER ${USER}
 
 CMD ./my_wrapper_script.sh
