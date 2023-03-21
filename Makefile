@@ -97,7 +97,7 @@ image-static:
 
 image-quick:
 	sed -e 's/GOARCH/$(GOARCH)/g' Dockerfile > .Dockerfile_$(GOARCH)
-	docker build -t $(IMAGE):$(VERSION) --build-arg BASE=gcr.io/distroless/cc -f .Dockerfile_$(GOARCH) .
+	docker build -t $(IMAGE):$(VERSION) --build-arg BASE=gcr.io/distroless/cc:debug -f .Dockerfile_$(GOARCH) .
 	docker tag $(IMAGE):$(VERSION) $(IMAGE):$(VERSION_ISTIO)
 
 image-quick-rootless:
